@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoBroker</title>
+</head>
+<body>
+    <a id="link" href="https://login.paytmmoney.com/merchant-login?apiKey=a74f32b1504745e7a211cab8783d43ee">Login to Paytm</a>
+    <script>
+        window.onload = async function(){
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryParamsObj = {};
+                for (const [name, value] of urlParams) {
+                    queryParamsObj[name] = value;
+                }
+                console.log(queryParamsObj);
+                let user_id = '6492b51044ea1559ddc4efdf';
+                const response = await fetch("http://localhost:4500/paytm/savetoken", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':'application/json',
+                    },
+                    body: JSON.stringify({user_id:user_id, requestToken: queryParamsObj.requestToken})
+                })
+
+                const json = await response.json();
+                console.log(json);
+            } catch (error) {
+                console.log("Query is Empty");
+            }
+        }
+
+        // document.getElementById("link").onclick=OnClick
+    </script>
+</body>
+</html>
